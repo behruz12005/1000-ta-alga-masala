@@ -1,1 +1,0 @@
-print('Yangi masala branchida ishlayapman')
