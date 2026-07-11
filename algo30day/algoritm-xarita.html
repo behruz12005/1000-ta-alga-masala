@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algoritm yo'l xaritasi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAF7; --surface:#FFFFFF; --ink:#16201C; --muted:#6B7570;
+    --accent:#0F6E56; --accent-soft:#E1F5EE; --accent-line:#C7E6DA;
+    --warm:#B65A33;
+    --border:#EAE8E0; --shadow:0 1px 2px rgba(20,30,25,.04);
+    --disp:'Space Grotesk',sans-serif; --body:'Inter',sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#13161A; --surface:#1B1F24; --ink:#EAEDEA; --muted:#9AA39E;
+      --accent:#5DCAA5; --accent-soft:#16322A; --accent-line:#274C40;
+      --warm:#E0966F;
+      --border:#2A2F35; --shadow:none;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.6;
+    padding:32px 20px 80px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto}
+  .eyebrow{font-family:var(--disp);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;margin-bottom:10px}
+  h1{font-family:var(--disp);font-size:34px;line-height:1.1;font-weight:700;letter-spacing:-.02em;margin-bottom:10px}
+  .lede{color:var(--muted);font-size:15px;max-width:60ch}
+  .bar-wrap{margin:26px 0 8px;background:var(--surface);border:1px solid var(--border);
+    border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
+  .bar-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+  .bar-top b{font-family:var(--disp);font-size:26px;font-weight:600}
+  .bar-top span{color:var(--muted);font-size:13px}
+  .bar{height:8px;background:var(--border);border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .4s ease}
+  .routine{display:flex;gap:10px;margin:14px 0 36px;flex-wrap:wrap}
+  .routine div{flex:1;min-width:140px;background:var(--surface);border:1px solid var(--border);
+    border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+  .routine b{font-family:var(--disp);display:block;font-size:18px;font-weight:600;color:var(--accent)}
+  .routine small{color:var(--muted);font-size:13px}
+  .sec{margin-bottom:40px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:4px;flex-wrap:wrap}
+  .sec-head h2{font-family:var(--disp);font-size:21px;font-weight:600;letter-spacing:-.01em}
+  .sec-head .tag{font-size:12px;color:var(--muted);font-weight:500}
+  .sec > p.note{color:var(--muted);font-size:14px;margin-bottom:18px}
+  .week-label{font-family:var(--disp);font-size:13px;font-weight:600;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.08em;margin:22px 0 12px}
+
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+    margin-bottom:8px;box-shadow:var(--shadow);overflow:hidden;transition:border-color .15s}
+  .card.cool-edge{border-left:3px solid var(--accent)}
+  .card.warm-edge{border-left:3px solid var(--warm)}
+  .card.full{background:var(--accent-soft);border-color:var(--accent-line)}
+  .head{display:flex;gap:13px;align-items:center;padding:14px 16px;cursor:pointer;user-select:none}
+  .head:hover{background:rgba(15,110,86,.03)}
+  .ring{flex-shrink:0;width:24px;height:24px;border:2px solid var(--border);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;transition:.15s}
+  .card.full .ring{background:var(--accent);border-color:var(--accent)}
+  .ring svg{width:13px;height:13px;opacity:0;transition:opacity .15s}
+  .card.full .ring svg{opacity:1}
+  .h-body{flex:1;min-width:0}
+  .h-title{font-family:var(--disp);font-weight:600;font-size:15px}
+  .h-title .k{color:var(--accent);margin-right:7px}
+  .card.warm-edge .h-title .k{color:var(--warm)}
+  .h-sub{color:var(--muted);font-size:13.5px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .pill{flex-shrink:0;font-family:var(--disp);font-size:12px;font-weight:600;color:var(--muted);
+    background:var(--bg);border:1px solid var(--border);border-radius:99px;padding:3px 9px}
+  .card.full .pill{color:var(--accent);border-color:var(--accent-line);background:transparent}
+  .chev{flex-shrink:0;color:var(--muted);transition:transform .2s;display:flex}
+  .chev svg{width:16px;height:16px}
+  .card.open .chev{transform:rotate(180deg)}
+  .subs{display:none;padding:0 16px 8px 16px}
+  .card.open .subs{display:block}
+  .sub{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--border);cursor:pointer}
+  .sub:first-child{border-top:1px dashed var(--border)}
+  .box{flex-shrink:0;width:20px;height:20px;border:2px solid var(--border);border-radius:6px;
+    margin-top:1px;display:flex;align-items:center;justify-content:center;transition:.15s}
+  .sub:hover .box{border-color:var(--accent)}
+  .sub.done .box{background:var(--accent);border-color:var(--accent)}
+  .box svg{width:12px;height:12px;opacity:0;transition:opacity .15s}
+  .sub.done .box svg{opacity:1}
+  .sub span{font-size:14px;line-height:1.5;transition:.15s}
+  .sub.done span{text-decoration:line-through;text-decoration-color:var(--accent-line);color:var(--muted)}
+  .focus{color:var(--muted);font-size:13.5px;padding:0 16px 10px 53px;margin-top:-4px}
+
+  .foot{margin-top:30px;padding:16px 18px;border:1px dashed var(--accent-line);border-radius:12px;
+    color:var(--muted);font-size:13.5px;background:var(--accent-soft)}
+  .foot b{color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Kuniga 1.5 soat &middot; haftada 5 kun</div>
+  <h1>Algoritm yo'l xaritasi</h1>
+  <p class="lede">Har bir kunni och &mdash; ichida mayda qadamlar bor. Hammasini belgilasang, kun tugaydi. Belgilashlaring saqlanib qoladi.</p>
+
+  <div class="bar-wrap">
+    <div class="bar-top"><b id="pct">0%</b><span id="count">0 / 0 qadam</span></div>
+    <div class="bar"><i id="fill"></i></div>
+  </div>
+
+  <div class="routine">
+    <div><b>20 daq</b><small>Mavzuni tushun</small></div>
+    <div><b>50 daq</b><small>Masalani o'zing yech</small></div>
+    <div><b>20 daq</b><small>Yechimni tahlil qil</small></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><h2>0-bosqich &mdash; Poydevor</h2><span class="tag">2 hafta &middot; LeetCode'siz</span></div>
+    <p class="note">Faqat tushunishga. Kodni o'zing terib yoz, ishga tushirishdan oldin natijani bashorat qil.</p>
+    <div class="week-label">1-hafta &middot; Python strukturalari + Big O</div>
+    <div id="w1"></div>
+    <div class="week-label">2-hafta &middot; Algoritm fikrlash</div>
+    <div id="w2"></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><h2>1&ndash;6 oy &mdash; O'sish</h2><span class="tag">kunlik format + pattern daftar</span></div>
+    <p class="note">Kunlik format yoqiladi. Oylar qattiq muddat emas, mo'ljal. Izchillik muhimroq.</p>
+    <div id="month-list"></div>
+  </div>
+
+  <div class="foot">
+    <b>Eng muhim qoida:</b> masalani 20&ndash;30 daqiqa o'zing yech. Qotib qolsang AI'dan tayyor yechim emas, faqat bitta ishora so'ra. Har oy oxirida eski masalalarni qayta yech.
+  </div>
+</div>
+
+<script>
+const ck='<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>';
+const chev='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+
+const week1=[
+ ["d1","Kun 1","Big O",[["d1a","Big O tushunchasini o'qi: O(1), O(n), O(n\u00B2)"],["d1b","has_number'ni for bilan yoz"],["d1c","has_number'ni set bilan yoz"],["d1d","Ikkala versiyaning Big O'sini ayt"]]],
+ ["d2","Kun 2","List / array",[["d2a","index, append, remove, slice'ni qaytar"],["d2b","Listda max va min topadigan funksiya yoz"],["d2c","Listda duplicate borligini topadigan funksiya yoz"]]],
+ ["d3","Kun 3","Set",[["d3a","Set nega tez ekanini o'qi (hash)"],["d3b","List'ni set'ga aylantirib ko'r"],["d3c","Ikki listning umumiy elementlarini set bilan top"]]],
+ ["d4","Kun 4","Dict / hashmap",[["d4a","key-value, get, in'ni qaytar"],["d4b","Stringda har harf nechta kelganini dict bilan sana"],["d4c","Xuddi shuni Counter bilan yoz"]]],
+ ["d5","Kun 5","String",[["d5a","Slicing va [::-1] reverse'ni o'rgan"],["d5b","Palindrome tekshiradigan funksiya yoz"],["d5c","Ikki so'z anagram'mi tekshir"]]],
+ ["d6","Kun 6","Aralash mashq",[["d6a","Two Sum'ni hashmap bilan qayta yech"],["d6b","Listdan takrorlanganni o'chir (set bilan)"],["d6c","Move Zeroes'ga o'xshash 1 mini masala"]]],
+ ["d7","Kun 7","Takrorlash",[["d7a","Haftalik mavzularni ko'z yugurtir"],["d7b","Tushunmagan joyni qayta o'qi"],["d7c","Daftarga haftalik xulosa yoz"]]]
+];
+const week2=[
+ ["d8","Kun 8","Two pointers",[["d8a","Two pointers g'oyasini o'qi"],["d8b","Saralangan listda target juftlikni top"],["d8c","Listni ikki ko'rsatkich bilan teskari aylantir"]]],
+ ["d9","Kun 9","Sliding window",[["d9a","Oyna usulini o'qi"],["d9b","k elementning eng katta yig'indisini top"],["d9c","Takrorlanmas eng uzun bo'lakni top (oddiy)"]]],
+ ["d10","Kun 10","Stack",[["d10a","LIFO va list'ni stack sifatida ishlat"],["d10b","Valid Parentheses'ni stack bilan yech"],["d10c","Stringni stack bilan reverse qil"]]],
+ ["d11","Kun 11","Queue / deque",[["d11a","FIFO va collections.deque'ni o'rgan"],["d11b","deque bilan oddiy navbat yoz"],["d11c","popleft va append farqini sina"]]],
+ ["d12","Kun 12","Binary search",[["d12a","Yarmini tashlash g'oyasini o'qi"],["d12b","Saralangan listda son qidir (o'zing yoz)"],["d12c","First Bad Version masalasini yech"]]],
+ ["d13","Kun 13","Sorting",[["d13a","sorted, key, reverse'ni o'rgan"],["d13b","Ro'yxatni turli kalit bilan sarala"],["d13c","Sorting kerak bo'lgan 1 masala yech"]]],
+ ["d14","Kun 14","Qayta ko'rish",[["d14a","5\u20136 sodda masalani qayta yech"],["d14b","Pattern daftarini to'ldir"],["d14c","2-haftalik xulosa yoz"]]]
+];
+const months=[
+ ["cool","Oy 1","Massiv, string, hash","~30 Easy","Two pointers, sliding window, prefix sum.",[["m1a","Hafta 1\u20132: array va string Easy masalalari"],["m1b","Hafta 3\u20134: hashmap + prefix sum"],["m1c","25\u201330 Easy masala yech"]]],
+ ["cool","Oy 2","Chiziqli strukturalar","Barcha Easy","Stack, queue, linked list, binary search, sorting.",[["m2a","Stack, queue, linked list masalalari"],["m2b","Binary search + sorting masalalari"],["m2c","Easy'ni AI'siz yecha olasan"]]],
+ ["cool","Oy 3","Daraxtlar","Daraxtni taniysan","DFS/BFS traversal, BST, heap, rekursiya.",[["m3a","Daraxt traversal + rekursiya"],["m3b","BST + heap masalalari"],["m3c","Daraxt pattern'ini darrov taniysan"]]],
+ ["warm","Oy 4","Graf, greedy, backtracking","Medium'ga o'tish","BFS/DFS grafda, union-find, greedy.",[["m4a","Graf BFS/DFS + union-find"],["m4b","Greedy + backtracking"],["m4c","Medium'ga ishonchli o't"]]],
+ ["warm","Oy 5","Dinamik dasturlash","DP turlarini bilasan","Eng katta to'siq. 1D, 2D, knapsack, LIS/LCS.",[["m5a","1D DP asoslari"],["m5b","2D DP, knapsack, LIS/LCS"],["m5c","DP asosiy turlarini bilasan"]]],
+ ["warm","Oy 6","Mixed + intervyu","Intervyu darajasi","Vaqt bilan yechish, mock intervyu, takror.",[["m6a","Aralash Medium, vaqt bilan"],["m6b","Mock intervyu (timer bilan)"],["m6c","Eski masalalarni qayta yech"]]]
+];
+
+let state={};
+const store=window.storage;
+const allSubs=[].concat(
+  ...week1.map(d=>d[3].map(s=>s[0])),
+  ...week2.map(d=>d[3].map(s=>s[0])),
+  ...months.map(m=>m[5].map(s=>s[0]))
+);
+
+async function load(){ if(!store)return; try{const r=await store.get('algo-tracker');if(r&&r.value)state=JSON.parse(r.value);}catch(e){state={};} }
+async function save(){ if(!store)return; try{await store.set('algo-tracker',JSON.stringify(state));}catch(e){} }
+
+function dayCard(d,kLabel,edge){
+  const [id,k,title,subs]=d;
+  const done=subs.filter(s=>state[s[0]]).length;
+  const full=done===subs.length?' full':'';
+  const sub=subs.map(([sid,txt])=>`<div class="sub${state[sid]?' done':''}" data-sub="${sid}"><div class="box">${ck}</div><span>${txt}</span></div>`).join('');
+  return `<div class="card ${edge}-edge${full}" data-card="${id}">
+    <div class="head" data-toggle="${id}">
+      <div class="ring">${ck}</div>
+      <div class="h-body"><div class="h-title"><span class="k">${k}</span>${title}</div><div class="h-sub">${subs.length} ta qadam</div></div>
+      <div class="pill">${done}/${subs.length}</div>
+      <div class="chev">${chev}</div>
+    </div>
+    <div class="subs">${sub}</div>
+  </div>`;
+}
+function monthCard(m){
+  const [tone,k,title,target,focus,subs]=m;
+  const id=subs[0][0];
+  const done=subs.filter(s=>state[s[0]]).length;
+  const full=done===subs.length?' full':'';
+  const sub=subs.map(([sid,txt])=>`<div class="sub${state[sid]?' done':''}" data-sub="${sid}"><div class="box">${ck}</div><span>${txt}</span></div>`).join('');
+  return `<div class="card ${tone}-edge${full}" data-card="${id}">
+    <div class="head" data-toggle="${id}">
+      <div class="ring">${ck}</div>
+      <div class="h-body"><div class="h-title"><span class="k">${k}</span>${title}</div><div class="h-sub">Maqsad: ${target}</div></div>
+      <div class="pill">${done}/${subs.length}</div>
+      <div class="chev">${chev}</div>
+    </div>
+    <div class="subs"><div class="focus">${focus}</div>${sub}</div>
+  </div>`;
+}
+
+function progress(){
+  const done=allSubs.filter(id=>state[id]).length;
+  const p=allSubs.length?Math.round(done/allSubs.length*100):0;
+  document.getElementById('pct').textContent=p+'%';
+  document.getElementById('count').textContent=done+' / '+allSubs.length+' qadam';
+  document.getElementById('fill').style.width=p+'%';
+}
+function refreshCard(card){
+  const subs=[...card.querySelectorAll('[data-sub]')];
+  const done=subs.filter(s=>state[s.dataset.sub]).length;
+  card.classList.toggle('full',done===subs.length);
+  card.querySelector('.pill').textContent=done+'/'+subs.length;
+}
+
+function render(){
+  document.getElementById('w1').innerHTML=week1.map(d=>dayCard(d,null,'cool')).join('');
+  document.getElementById('w2').innerHTML=week2.map(d=>dayCard(d,null,'cool')).join('');
+  document.getElementById('month-list').innerHTML=months.map(monthCard).join('');
+  progress();
+  document.querySelectorAll('[data-toggle]').forEach(h=>{
+    h.addEventListener('click',()=>h.closest('.card').classList.toggle('open'));
+  });
+  document.querySelectorAll('[data-sub]').forEach(el=>{
+    el.addEventListener('click',async(e)=>{
+      e.stopPropagation();
+      const id=el.dataset.sub;
+      state[id]=!state[id];
+      el.classList.toggle('done',!!state[id]);
+      refreshCard(el.closest('.card'));
+      progress();
+      await save();
+    });
+  });
+}
+(async()=>{ await load(); render(); })();
+</script>
+</body>
+</html>
