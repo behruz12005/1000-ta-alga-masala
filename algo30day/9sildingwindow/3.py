@@ -1,10 +1,10 @@
 def longest_unique(lst):
+    L = 0
     R = 0
-    lines = set()
+    window = set()
+    max_len = 0
     while R < len(lst):
-        if lst[R] not in lines:
-            lines.add(lst[R])
-            R += 1
+        if lst[R] not in window:
 
     return len(lines)
 
