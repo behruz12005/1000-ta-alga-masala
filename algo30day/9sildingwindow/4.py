@@ -11,6 +11,6 @@ def longest_unique(lst):
         else:
             window_set.remove(lst[L])
             L+=1
-    return max_len, R,L
+    return lst[L:R]
 
 print(longest_unique("123245"))

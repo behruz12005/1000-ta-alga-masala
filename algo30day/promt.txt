@@ -41,9 +41,9 @@ suyanishdan ohista qaytarib tur.
 
 
 
+
+
 [Oyna usulini o'qi]  Bu bugungi taskim. Avval shu mavzuni yaxshi aniq tushuntir. menga hech qanaqa yordam berma algroritm yechimini ham berma. uzim yechim topishga harakat qilaman keyin segna yozaman
-
-
 
 Mana kodim:
 [kod shu yerga]
